@@ -25,7 +25,6 @@ hs_err_pid*
 *.java.hsp
 *.sonarj
 *.sw*
-.DS_Store
 .settings
 .springBeans
 bin
@@ -69,4 +68,5 @@ atlassian-ide-plugin.xml
 # VS Code
 .vscode/
 
-
+# macOS-specifics metadata
+.DS_Store
