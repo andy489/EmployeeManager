@@ -1,9 +1,10 @@
 ## Employee Manager
 
-The idea of the project is to develop a web-based employee manager system. The system will contain information about jobs, organizations and employees. The system will provide different types of reposts such as:
+The idea of the project is to develop a web-based employee manager system. The system will contain information about jobs, organizations and employees. The system will provide different types of reposts like (for example):
 
-- display top 5 employees from dreamix with top skill Java Security
+- display top 5 employees from Dreamix with top skill Java Security
 - display all employees from VM Ware
+- display all employees from Endava hired last month
 - display all employees hired for at least one year with keyword "media" in their job description
 etc.
 
