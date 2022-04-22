@@ -14,8 +14,17 @@ public class JobDTOMapper {
         return new JobDTO(
                 job.getName(),
                 job.getDescription(),
-                job.getMinimalSalary()
+                job.getMinimalSalary(),
+                job.getEmployees()
         );
+    }
+
+    public Job toJob(JobDTO jobDTO) {
+        Job job = new Job();
+
+        job.update(jobDTO);
+
+        return job;
     }
 
     public JobDTOWithId toDTOWithId(Job job) {
@@ -23,7 +32,8 @@ public class JobDTOMapper {
                 job.getId(),
                 job.getName(),
                 job.getDescription(),
-                job.getMinimalSalary()
+                job.getMinimalSalary(),
+                job.getEmployees()
         );
     }
 

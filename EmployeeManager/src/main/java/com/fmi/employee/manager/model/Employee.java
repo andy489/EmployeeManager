@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -19,8 +20,8 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name="id", nullable=false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String firstName;
@@ -37,9 +38,9 @@ public class Employee implements Serializable {
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
-    // private Long orgId; ???
-    // private Organization org;
+    @ManyToOne
+    private Organization org;
 
-    // private Long jobId; ???
-    // private Job jobId;
+    @ManyToOne
+    private Job job;
 }

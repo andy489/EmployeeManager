@@ -6,7 +6,6 @@ public enum LoggerLevel {
     DEBUG(2, "DEBUG"),
     TRACE(3, "TRACE");
 
-
     private final Integer code;
     private final String label;
 

@@ -8,9 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,15 +29,20 @@ public class Organization implements Serializable {
     private String name;
     private String website;
 
+    @OneToMany
+    @JoinColumn(name = "organization_id")
+    private List<Employee> employees;
+
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
     public Organization(){}
 
-    public Organization(Long id, String name, String website, LocalDateTime timeCreated) {
+    public Organization(Long id, String name, String website, List<Employee> employees,LocalDateTime timeCreated) {
         this.id = id;
         this.name = name;
         this.website = website;
+        this.employees = employees;
         this.timeCreated = timeCreated;
     }
 }
