@@ -12,28 +12,34 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
-@Table(name ="organization")
-public class Organization implements Serializable {
+@Entity
+@Table(name = "employee")
+public class Employee implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name="id", nullable=false)
     private Long id;
-    private String name;
-    private String website;
+
+    private String firstName;
+    private String lastName;
+
+    private String email;
+    private String phone;
+
+    private LocalDateTime hireDate;
+
+    private Double salary;
+    private String topSkill;
 
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
-    public Organization(){}
+    // private Long orgId; ???
+    // private Organization org;
 
-    public Organization(Long id, String name, String website, LocalDateTime timeCreated) {
-        this.id = id;
-        this.name = name;
-        this.website = website;
-        this.timeCreated = timeCreated;
-    }
+    // private Long jobId; ???
+    // private Job jobId;
 }

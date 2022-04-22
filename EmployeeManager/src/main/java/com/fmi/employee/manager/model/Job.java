@@ -7,6 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -19,12 +21,14 @@ public class Job implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
 
     private String name;
     private String description;
     private Integer minimalSalary;
+
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
