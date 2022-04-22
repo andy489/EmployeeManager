@@ -2,6 +2,7 @@ package com.fmi.employee.manager.model;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import lombok.Data;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
 @Entity
 @Table(name = "jobs")
 public class Job implements Serializable {

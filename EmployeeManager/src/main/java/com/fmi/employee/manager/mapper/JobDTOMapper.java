@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class JobDTOMapper {
-    public JobDTO convertToDTO(Job job) {
+    public JobDTO toDTO(Job job) {
         return new JobDTO(
                 job.getName(),
                 job.getDescription(),
@@ -18,7 +18,7 @@ public class JobDTOMapper {
         );
     }
 
-    public JobDTOWithId convertToDTOWithId(Job job) {
+    public JobDTOWithId toDTOWithId(Job job) {
         return new JobDTOWithId(
                 job.getId(),
                 job.getName(),
@@ -27,7 +27,7 @@ public class JobDTOMapper {
         );
     }
 
-    public List<JobDTO> convertListToDTO(List<Job> jobList) {
-        return jobList.stream().map(this::convertToDTO).collect(Collectors.toList());
+    public List<JobDTO> toDTOList(List<Job> jobList) {
+        return jobList.stream().map(this::toDTO).collect(Collectors.toList());
     }
 }
