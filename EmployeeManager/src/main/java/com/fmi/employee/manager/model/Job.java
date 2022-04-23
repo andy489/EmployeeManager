@@ -1,6 +1,7 @@
 package com.fmi.employee.manager.model;
 
 import com.fmi.employee.manager.dto.JobDTO;
+import com.fmi.employee.manager.dto.JobDTOWithId;
 import lombok.Data;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -62,5 +63,12 @@ public class Job implements Serializable {
         name = jobDTO.getName();
         description = jobDTO.getDescription();
         minimalSalary = jobDTO.getMinimalSalary();
+    }
+
+    public void update(JobDTOWithId jobDTOWithId) {
+        id = jobDTOWithId.getId();
+        name = jobDTOWithId.getName();
+        description = jobDTOWithId.getDescription();
+        minimalSalary = jobDTOWithId.getMinimalSalary();
     }
 }

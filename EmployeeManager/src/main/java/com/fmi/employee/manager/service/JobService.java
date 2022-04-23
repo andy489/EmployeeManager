@@ -4,6 +4,7 @@ import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
 
 import java.util.List;
+import java.util.Map;
 
 public interface JobService {
     JobDTOWithId saveJob(JobDTO jobDTO);
@@ -18,9 +19,11 @@ public interface JobService {
 
     List<JobDTO> getJobsWithMinSalaryAtLeast(Integer minSalary);
 
-    Double getAverageMinimalJobSalary();
+    Double getAverageMinJobSalary();
 
-    JobDTOWithId updateJob(JobDTO jovDTO, Long id);
+    JobDTOWithId partialUpdateJob(Long id, Map<Object, Object> fields);
+
+    JobDTOWithId updateJob(JobDTOWithId jobDTOWithId);
 
     void deleteJob(Long id);
 }

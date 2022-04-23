@@ -9,9 +9,13 @@ import com.fmi.employee.manager.repository.JobRepository;
 import com.fmi.employee.manager.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
+import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -89,17 +93,57 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Double getAverageMinimalJobSalary() {
-        return null;
+    public Double getAverageMinJobSalary() {
+        IntSummaryStatistics intSummaryStatistics = jobRepo.findAll().stream()
+                .mapToInt(Job::getMinimalSalary).summaryStatistics();
+
+        if (intSummaryStatistics.getCount() == 0) {
+            throw new ResourceNotFoundException("Job", "salary", "average salary");
+        }
+
+        return intSummaryStatistics.getAverage();
     }
 
     @Override
-    public JobDTOWithId updateJob(JobDTO jovDTO, Long id) {
-        return null;
+    public JobDTOWithId partialUpdateJob(Long id, Map<Object, Object> fields) {
+        Optional<Job> job = jobRepo.findById(id);
+
+        if (job.isEmpty()) {
+            throw new ResourceNotFoundException("Job", "Id", id);
+
+        }
+
+        Job jobToUpdate = job.get();
+
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Job.class, (String) key);
+
+            assert field != null;
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, jobToUpdate, value);
+        });
+
+        return mapper.toDTOWithId(jobRepo.save(jobToUpdate));
+    }
+
+    @Override
+    public JobDTOWithId updateJob(JobDTOWithId jobDTOWithId) {
+        Long searchedId = jobDTOWithId.getId();
+
+        Optional<Job> searchedJob = jobRepo.findById(searchedId);
+
+        if (searchedJob.isEmpty()) {
+            throw new ResourceNotFoundException("Job", "id", searchedId);
+        }
+
+        Job jobToSave = new Job();
+        jobToSave.update(jobDTOWithId);
+        return mapper.toDTOWithId(jobRepo.save(jobToSave));
     }
 
     @Override
     public void deleteJob(Long id) {
-
+        jobRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Job", "Id", id));
+        jobRepo.deleteById(id);
     }
 }
