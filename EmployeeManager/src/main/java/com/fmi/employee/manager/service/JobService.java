@@ -8,7 +8,7 @@ import java.util.List;
 public interface JobService {
     JobDTOWithId saveJob(JobDTO jobDTO);
 
-    public List<JobDTOWithId> saveAll(List<JobDTO> jobDTO);
+    List<JobDTOWithId> saveAll(List<JobDTO> jobDTO);
 
     List<JobDTO> getAllJobs();
 
@@ -16,7 +16,7 @@ public interface JobService {
 
     List<JobDTO> getJobsWithKeywords(String... keywords);
 
-    List<JobDTO> getJobsWithMinSalaryGreaterThan(Integer minSalary);
+    List<JobDTO> getJobsWithMinSalaryAtLeast(Integer minSalary);
 
     Double getAverageMinimalJobSalary();
 
