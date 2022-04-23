@@ -11,11 +11,19 @@ import java.util.stream.Collectors;
 @Component
 public class OrgDTOMapper {
    public OrgDTO toDTO(Organization org){
-      return new OrgDTO(org.getName(), org.getWebsite());
+      return new OrgDTO(org.getName(), org.getWebsite(), org.getEmployees());
+   }
+
+   public Organization toJob(OrgDTO jobDTO) {
+      Organization job = new Organization();
+
+      job.update(jobDTO);
+
+      return job;
    }
 
    public OrgDTOWithId toDTOWithId(Organization org){
-      return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite());
+      return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite(), org.getEmployees());
    }
 
    public List<OrgDTO> toDTOList(List<Organization> orgList){

@@ -42,10 +42,10 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<JobDTOWithId> saveAll(List<JobDTO> jobDTO) {
-        final int SIZE = jobDTO.size();
+    public List<JobDTOWithId> saveAll(List<JobDTO> jobDTOs) {
+        final int SIZE = jobDTOs.size();
 
-        List<Job> toAdd = jobDTO.stream().limit(SIZE).map(mapper::toJob).collect(Collectors.toList());
+        List<Job> toAdd = jobDTOs.stream().limit(SIZE).map(mapper::toJob).collect(Collectors.toList());
 
         return jobRepo.saveAll(toAdd).stream().map(mapper::toDTOWithId).collect(Collectors.toList());
     }

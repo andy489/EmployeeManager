@@ -13,9 +13,7 @@ public class JobDTO {
 
     private List<Employee> employees;
 
-    public JobDTO() {
-
-    }
+    public JobDTO() {}
 
     public JobDTO(
             String name,

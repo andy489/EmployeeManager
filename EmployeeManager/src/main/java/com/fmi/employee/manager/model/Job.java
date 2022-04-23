@@ -2,7 +2,6 @@ package com.fmi.employee.manager.model;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
-import lombok.Data;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
