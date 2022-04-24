@@ -5,9 +5,11 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -15,7 +17,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Entity
-@Table(name = "employee")
+@Table(name = "employees")
 public class Employee implements Serializable {
     private static final long serialVersionUID = 3L;
 
@@ -38,9 +40,11 @@ public class Employee implements Serializable {
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "org_id", nullable = false)
     private Organization org;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 }

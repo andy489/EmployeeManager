@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Component
 public class OrgDTOMapper {
    public OrgDTO toDTO(Organization org){
-      return new OrgDTO(org.getName(), org.getWebsite(), org.getEmployees());
+      return new OrgDTO(org.getName(), org.getWebsite(), org.getEmployees(), org.getInternalCode());
    }
 
    public Organization toJob(OrgDTO jobDTO) {
@@ -23,7 +23,7 @@ public class OrgDTOMapper {
    }
 
    public OrgDTOWithId toDTOWithId(Organization org){
-      return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite(), org.getEmployees());
+      return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite(), org.getEmployees(), org.getInternalCode());
    }
 
    public List<OrgDTO> toDTOList(List<Organization> orgList){

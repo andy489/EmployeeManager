@@ -40,6 +40,7 @@ public class OrganizationController {
                 "test-name",
                 "test-web-site",
                 Collections.emptyList(),
+                "test-internal-code",
                 LocalDateTime.now()
         );
     }

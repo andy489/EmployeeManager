@@ -15,7 +15,8 @@ public class JobDTOMapper {
                 job.getName(),
                 job.getDescription(),
                 job.getMinimalSalary(),
-                job.getEmployees()
+                job.getEmployees(),
+                job.getInternalCode()
         );
     }
 
@@ -33,7 +34,8 @@ public class JobDTOMapper {
                 job.getName(),
                 job.getDescription(),
                 job.getMinimalSalary(),
-                job.getEmployees()
+                job.getEmployees(),
+                job.getInternalCode()
         );
     }
 

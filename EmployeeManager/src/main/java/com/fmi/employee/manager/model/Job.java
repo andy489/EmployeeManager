@@ -5,8 +5,10 @@ import com.fmi.employee.manager.dto.JobDTOWithId;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,15 +27,18 @@ public class Job implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "job_id", nullable = false)
     private Long id;
 
     private String name;
     private String description;
     private Integer minimalSalary;
 
-    @OneToMany
-    @JoinColumn(name = "job_id")
+    @Column(unique = true)
+    private String internalCode;
+
+    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private List<Employee> employees;
 
     @CreationTimestamp
@@ -44,6 +49,7 @@ public class Job implements Serializable {
                String description,
                Integer minimalSalary,
                List<Employee> employees,
+               String internalCode,
                LocalDateTime timeCreated
     ) {
         this.id = id;
@@ -51,6 +57,7 @@ public class Job implements Serializable {
         this.description = description;
         this.minimalSalary = minimalSalary;
         this.employees = employees;
+        this.internalCode = internalCode;
         this.timeCreated = timeCreated;
     }
 
@@ -62,6 +69,8 @@ public class Job implements Serializable {
         name = jobDTO.getName();
         description = jobDTO.getDescription();
         minimalSalary = jobDTO.getMinimalSalary();
+        employees = jobDTO.getEmployees();
+        internalCode = jobDTO.getInternalCode();
     }
 
     public void update(JobDTOWithId jobDTOWithId) {
@@ -69,5 +78,7 @@ public class Job implements Serializable {
         name = jobDTOWithId.getName();
         description = jobDTOWithId.getDescription();
         minimalSalary = jobDTOWithId.getMinimalSalary();
+        employees = jobDTOWithId.getEmployees();
+        internalCode = jobDTOWithId.getInternalCode();
     }
 }

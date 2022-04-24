@@ -9,8 +9,8 @@ import java.util.List;
 public class OrgDTOWithId extends OrgDTO{
    private final Long id;
 
-    public OrgDTOWithId(Long id, String name, String website, List<Employee> employees) {
-        super(name, website, employees);
+    public OrgDTOWithId(Long id, String name, String website, List<Employee> employees, String internalCode) {
+        super(name, website, employees, internalCode);
         this.id = id;
     }
 }

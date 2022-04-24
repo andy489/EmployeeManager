@@ -5,8 +5,10 @@ import com.fmi.employee.manager.dto.OrgDTOWithId;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,20 +21,23 @@ import java.util.List;
 
 @Entity
 @Getter
-@Table(name = "organization")
+@Table(name = "organizations")
 public class Organization implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "org_id", nullable = false)
     private Long id;
     private String name;
     private String website;
 
-    @OneToMany
-    @JoinColumn(name = "organization_id")
+    @OneToMany(mappedBy = "org", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     private List<Employee> employees;
+
+    @Column(unique = true)
+    private String internalCode;
 
     @CreationTimestamp
     private LocalDateTime timeCreated;
@@ -40,11 +45,19 @@ public class Organization implements Serializable {
     public Organization() {
     }
 
-    public Organization(Long id, String name, String website, List<Employee> employees, LocalDateTime timeCreated) {
+    public Organization(
+            Long id,
+            String name,
+            String website,
+            List<Employee> employees,
+            String internalCode,
+            LocalDateTime timeCreated
+    ) {
         this.id = id;
         this.name = name;
         this.website = website;
         this.employees = employees;
+        this.internalCode = internalCode;
         this.timeCreated = timeCreated;
     }
 
@@ -52,6 +65,7 @@ public class Organization implements Serializable {
         name = orgDTO.getName();
         website = orgDTO.getWebsite();
         employees = orgDTO.getEmployees();
+        internalCode = orgDTO.getInternalCode();
     }
 
     public void update(OrgDTOWithId orgDTOWithId) {
@@ -59,5 +73,6 @@ public class Organization implements Serializable {
         name = orgDTOWithId.getName();
         website = orgDTOWithId.getWebsite();
         employees = orgDTOWithId.getEmployees();
+        internalCode = orgDTOWithId.getInternalCode();
     }
 }
