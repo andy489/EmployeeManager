@@ -70,6 +70,12 @@ public class OrganizationController {
         return new ResponseEntity<>(orgService.getOrgById(orgId), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/org/code/AB123
+    @GetMapping("org/code/{code}")
+    public ResponseEntity<OrgDTO> getOrgByInternalCode(@PathVariable("code") String orgInternalCode) {
+        return new ResponseEntity<>(orgService.getOrgByInternalCode(orgInternalCode), HttpStatus.OK);
+    }
+
     // http://localhost:8080/api/org/2
     @PatchMapping("org/{id}")
     public ResponseEntity<OrgDTOWithId> partialUpdateOrg(

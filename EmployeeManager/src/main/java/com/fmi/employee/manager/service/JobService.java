@@ -15,6 +15,8 @@ public interface JobService {
 
     JobDTOWithId getJobById(Long id);
 
+    JobDTO getJobByInternalCode(String internalCode);
+
     List<JobDTO> getJobsWithKeywords(String... keywords);
 
     List<JobDTO> getJobsWithMinSalaryAtLeast(Integer minSalary);

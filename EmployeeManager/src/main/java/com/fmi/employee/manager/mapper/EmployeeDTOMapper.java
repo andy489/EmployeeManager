@@ -2,9 +2,10 @@ package com.fmi.employee.manager.mapper;
 
 import com.fmi.employee.manager.dto.EmployeeDTO;
 import com.fmi.employee.manager.dto.EmployeeDTOWithID;
-import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.model.Employee;
+import org.springframework.stereotype.Component;
 
+@Component
 public class EmployeeDTOMapper {
     public EmployeeDTO toDTO(Employee employee) {
         return new EmployeeDTO(

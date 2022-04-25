@@ -15,6 +15,8 @@ public interface OrganizationService {
 
     OrgDTOWithId getOrgById(Long id);
 
+    OrgDTO getOrgByInternalCode(String internalCode);
+
     OrgDTOWithId partialUpdateOrg(Long id, Map<Object, Object> fields);
 
     OrgDTOWithId updateOrg(OrgDTOWithId orgDTOWithId);

@@ -1,5 +1,7 @@
 package com.fmi.employee.manager.model;
 
+import com.fmi.employee.manager.dto.EmployeeDTO;
+import com.fmi.employee.manager.dto.EmployeeDTOWithID;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -47,4 +49,31 @@ public class Employee implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "org_id", nullable = false)
     private Organization org;
+
+    public void update(EmployeeDTO employeeDTO) {
+        firstName = employeeDTO.getFirstName();
+        lastName = employeeDTO.getLastName();
+        email = employeeDTO.getEmail();
+        phone = employeeDTO.getPhone();
+        hireDate = employeeDTO.getHireDate();
+        salary = employeeDTO.getSalary();
+        topSkill = employeeDTO.getTopSkill();
+
+        // Job job
+        // Organization org
+    }
+
+    public void update(EmployeeDTOWithID employeeDTOWithID) {
+        id = employeeDTOWithID.getId();
+        firstName = employeeDTOWithID.getFirstName();
+        lastName = employeeDTOWithID.getLastName();
+        email = employeeDTOWithID.getEmail();
+        phone = employeeDTOWithID.getPhone();
+        hireDate = employeeDTOWithID.getHireDate();
+        salary = employeeDTOWithID.getSalary();
+        topSkill = employeeDTOWithID.getTopSkill();
+
+        // Job job
+        // Organization org
+    }
 }

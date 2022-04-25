@@ -67,6 +67,17 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public JobDTO getJobByInternalCode(String internalCode) {
+        Optional<Job> jobByInternalCode = jobRepo.findJobByInternalCode(internalCode);
+
+        if(jobByInternalCode.isPresent()){
+            return mapper.toDTO(jobByInternalCode.get());
+        }
+
+        throw new ResourceNotFoundException("Job", "Internal Code", internalCode);
+    }
+
+    @Override
     public List<JobDTO> getJobsWithKeywords(String... keywords) {
         List<String> keywordsList = Arrays.stream(keywords)
                 .map(String::toLowerCase).collect(Collectors.toList());

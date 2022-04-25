@@ -64,6 +64,17 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
+    public OrgDTO getOrgByInternalCode(String internalCode) {
+        Optional<Organization> orgByInternalCode = orgRepo.findOrgByInternalCode(internalCode);
+
+        if(orgByInternalCode.isPresent()){
+            return mapper.toDTO(orgByInternalCode.get());
+        }
+
+        throw new ResourceNotFoundException("Organization", "Internal Code", internalCode);
+    }
+
+    @Override
     public OrgDTOWithId partialUpdateOrg(Long id, Map<Object, Object> fields) {
         Optional<Organization> org = orgRepo.findById(id);
 

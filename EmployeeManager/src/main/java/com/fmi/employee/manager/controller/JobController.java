@@ -73,6 +73,12 @@ public class JobController {
         return new ResponseEntity<>(jobService.getJobById(jobId), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/job/code/CV4S5
+    @GetMapping("job/code/{code}")
+    public ResponseEntity<JobDTO> getJobByInternalCode(@PathVariable("code") String jobInternalCode) {
+        return new ResponseEntity<>(jobService.getJobByInternalCode(jobInternalCode), HttpStatus.OK);
+    }
+
     // http://localhost:8080/api/job/keywords?word=data,end
     // http://localhost:8080/api/job/keywords?word=data&word=end
     @GetMapping("job/keywords")
