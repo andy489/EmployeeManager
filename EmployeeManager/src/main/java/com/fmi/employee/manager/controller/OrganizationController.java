@@ -33,38 +33,44 @@ public class OrganizationController {
         this.orgService = orgService;
     }
 
+    // http://localhost:8080/api/org/template
     @GetMapping("org/template")
     public Organization getJSONTemplate() {
         return new Organization(
                 0L,
                 "test-name",
                 "test-web-site",
-                Collections.emptyList(),
                 "test-internal-code",
+                Collections.emptyList(),
                 LocalDateTime.now()
         );
     }
 
+    // http://localhost:8080/api/org
     @PostMapping("org")
     public ResponseEntity<OrgDTOWithId> saveSingleOrg(@RequestBody OrgDTO orgDTO) {
         return new ResponseEntity<>(orgService.saveOrg(orgDTO), HttpStatus.CREATED);
     }
 
+    // http://localhost:8080/api/orgs
     @PostMapping("orgs")
     public ResponseEntity<List<OrgDTOWithId>> saveMultipleJobs(@RequestBody List<OrgDTO> orgDTO) {
         return new ResponseEntity<>(orgService.saveAll(orgDTO), HttpStatus.CREATED);
     }
 
+    // http://localhost:8080/api/org
     @GetMapping("org")
     public ResponseEntity<List<OrgDTO>> listOrgs() {
         return new ResponseEntity<>(orgService.getAllOrgs(), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/org/id/2
     @GetMapping("org/id/{id}")
     public ResponseEntity<OrgDTOWithId> getOrgById(@PathVariable("id") Long orgId) {
         return new ResponseEntity<>(orgService.getOrgById(orgId), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/org/2
     @PatchMapping("org/{id}")
     public ResponseEntity<OrgDTOWithId> partialUpdateOrg(
             @PathVariable("id") Long jobId,
@@ -73,11 +79,13 @@ public class OrganizationController {
         return new ResponseEntity<>(orgService.partialUpdateOrg(jobId, fields), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/org
     @PutMapping("org")
     public ResponseEntity<OrgDTOWithId> updateOrg(@RequestBody OrgDTOWithId jobDTOWithId) {
         return new ResponseEntity<>(orgService.updateOrg(jobDTOWithId), HttpStatus.OK);
     }
 
+    // http://localhost:8080/api/org/10
     @DeleteMapping("/org/{id}")
     public ResponseEntity<String> deleteOrg(@PathVariable("id") Long orgId) {
         orgService.deleteOrg(orgId);

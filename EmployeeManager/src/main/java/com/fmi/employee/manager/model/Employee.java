@@ -41,10 +41,10 @@ public class Employee implements Serializable {
     private LocalDateTime timeCreated;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "org_id", nullable = false)
-    private Organization org;
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "org_id", nullable = false)
+    private Organization org;
 }

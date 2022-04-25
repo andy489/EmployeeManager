@@ -32,12 +32,12 @@ public class Organization implements Serializable {
     private String name;
     private String website;
 
+    @Column(unique = true)
+    private String internalCode;
+
     @OneToMany(mappedBy = "org", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private List<Employee> employees;
-
-    @Column(unique = true)
-    private String internalCode;
 
     @CreationTimestamp
     private LocalDateTime timeCreated;
@@ -49,8 +49,8 @@ public class Organization implements Serializable {
             Long id,
             String name,
             String website,
-            List<Employee> employees,
             String internalCode,
+            List<Employee> employees,
             LocalDateTime timeCreated
     ) {
         this.id = id;

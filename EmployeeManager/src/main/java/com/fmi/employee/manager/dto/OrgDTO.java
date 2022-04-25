@@ -13,13 +13,12 @@ public class OrgDTO {
 
     private String internalCode;
 
-    public OrgDTO() {
-    }
+    public OrgDTO() {}
 
-    public OrgDTO(String name, String website, List<Employee> employees, String internalCode) {
+    public OrgDTO(String name, String website, String internalCode, List<Employee> employees) {
         this.name = name;
         this.website = website;
-        this.employees = employees;
         this.internalCode = internalCode;
+        this.employees = employees;
     }
 }

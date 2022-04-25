@@ -22,13 +22,14 @@ public class JobDTO {
             String name,
             String description,
             Integer minimalSalary,
-            List<Employee> employees,
-            String internalCode
+            String internalCode,
+            List<Employee> employees
+
     ) {
         this.name = name;
         this.description = description;
         this.minimalSalary = minimalSalary;
-        this.employees = employees;
         this.internalCode = internalCode;
+        this.employees = employees;
     }
 }

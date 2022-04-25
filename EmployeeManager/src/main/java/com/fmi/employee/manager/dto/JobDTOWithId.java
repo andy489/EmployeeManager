@@ -14,10 +14,10 @@ public class JobDTOWithId extends JobDTO {
             String name,
             String description,
             Integer minimalSalary,
-            List<Employee> employees,
-            String internalCode
+            String internalCode,
+            List<Employee> employees
     ) {
-        super(name, description, minimalSalary, employees, internalCode);
+        super(name, description, minimalSalary, internalCode, employees);
         this.id = id;
     }
 }

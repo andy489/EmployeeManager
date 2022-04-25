@@ -10,23 +10,23 @@ import java.util.stream.Collectors;
 
 @Component
 public class OrgDTOMapper {
-   public OrgDTO toDTO(Organization org){
-      return new OrgDTO(org.getName(), org.getWebsite(), org.getEmployees(), org.getInternalCode());
-   }
+    public OrgDTO toDTO(Organization org) {
+        return new OrgDTO(org.getName(), org.getWebsite(), org.getInternalCode(), org.getEmployees());
+    }
 
-   public Organization toJob(OrgDTO jobDTO) {
-      Organization job = new Organization();
+    public Organization toJob(OrgDTO jobDTO) {
+        Organization job = new Organization();
 
-      job.update(jobDTO);
+        job.update(jobDTO);
 
-      return job;
-   }
+        return job;
+    }
 
-   public OrgDTOWithId toDTOWithId(Organization org){
-      return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite(), org.getEmployees(), org.getInternalCode());
-   }
+    public OrgDTOWithId toDTOWithId(Organization org) {
+        return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite(), org.getInternalCode(), org.getEmployees());
+    }
 
-   public List<OrgDTO> toDTOList(List<Organization> orgList){
-      return orgList.stream().map(this::toDTO).collect(Collectors.toList());
-   }
+    public List<OrgDTO> toDTOList(List<Organization> orgList) {
+        return orgList.stream().map(this::toDTO).collect(Collectors.toList());
+    }
 }
