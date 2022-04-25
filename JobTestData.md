@@ -1,5 +1,5 @@
 ```json
-// GET [Get Job Template]
+// GET [Get Job Entity Template]
 // http://localhost:8080/api/job/template
 // RESPONSE
 {
@@ -191,7 +191,7 @@
     }
 ]
 
-// PATCH [Update Job Partially]
+// PATCH [Update Job By Id Partially]
 // http://localhost:8080/api/job/7
 // BODY
 {
@@ -209,5 +209,6 @@
 
 // DELETE [Delete Job By Id]
 // http://localhost:8080/api/job/7
-
+// RESPONSE
+[200 OK] ~Job with id %d was deleted successfully.
 ```
