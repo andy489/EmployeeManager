@@ -1,12 +1,13 @@
 package com.fmi.employee.manager.dto;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class EmployeeDTO {
+public class EmpDTOWithId {
+    private final Long id;
+
     private String firstName;
     private String lastName;
 
@@ -18,14 +19,11 @@ public class EmployeeDTO {
     private Double salary;
     private String topSkill;
 
-    @NotNull
-    private String jobCode;
-    @NotNull
-    private String orgCode;
+    private JobDTO jobDTO;
+    private OrgDTO orgDTO;
 
-    public EmployeeDTO() {}
-
-    public EmployeeDTO(
+    public EmpDTOWithId(
+            Long id,
             String firstName,
             String lastName,
             String email,
@@ -33,9 +31,10 @@ public class EmployeeDTO {
             LocalDateTime hireDate,
             Double salary,
             String topSkill,
-            String jobCode,
-            String orgCode
+            JobDTO jobDTO,
+            OrgDTO orgDTO
     ) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -43,7 +42,7 @@ public class EmployeeDTO {
         this.hireDate = hireDate;
         this.salary = salary;
         this.topSkill = topSkill;
-        this.jobCode = jobCode;
-        this.orgCode = orgCode;
+        this.jobDTO = jobDTO;
+        this.orgDTO = orgDTO;
     }
 }

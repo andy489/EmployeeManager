@@ -64,11 +64,11 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrgDTO getOrgByInternalCode(String internalCode) {
+    public Organization getOrgByInternalCode(String internalCode) {
         Optional<Organization> orgByInternalCode = orgRepo.findOrgByInternalCode(internalCode);
 
         if(orgByInternalCode.isPresent()){
-            return mapper.toDTO(orgByInternalCode.get());
+            return orgByInternalCode.get();
         }
 
         throw new ResourceNotFoundException("Organization", "Internal Code", internalCode);

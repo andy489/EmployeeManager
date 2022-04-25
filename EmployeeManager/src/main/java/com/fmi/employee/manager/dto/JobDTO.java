@@ -24,7 +24,6 @@ public class JobDTO {
             Integer minimalSalary,
             String internalCode,
             List<Employee> employees
-
     ) {
         this.name = name;
         this.description = description;

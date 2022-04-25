@@ -67,11 +67,11 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobDTO getJobByInternalCode(String internalCode) {
+    public Job getJobByInternalCode(String internalCode) {
         Optional<Job> jobByInternalCode = jobRepo.findJobByInternalCode(internalCode);
 
         if(jobByInternalCode.isPresent()){
-            return mapper.toDTO(jobByInternalCode.get());
+            return jobByInternalCode.get();
         }
 
         throw new ResourceNotFoundException("Job", "Internal Code", internalCode);

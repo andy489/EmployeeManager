@@ -2,6 +2,7 @@ package com.fmi.employee.manager.service;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
+import com.fmi.employee.manager.model.Job;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public interface JobService {
 
     JobDTOWithId getJobById(Long id);
 
-    JobDTO getJobByInternalCode(String internalCode);
+    Job getJobByInternalCode(String internalCode);
 
     List<JobDTO> getJobsWithKeywords(String... keywords);
 

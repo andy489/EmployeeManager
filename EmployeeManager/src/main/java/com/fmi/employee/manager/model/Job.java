@@ -48,16 +48,16 @@ public class Job implements Serializable {
                String name,
                String description,
                Integer minimalSalary,
-               List<Employee> employees,
                String internalCode,
+               List<Employee> employees,
                LocalDateTime timeCreated
     ) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.minimalSalary = minimalSalary;
-        this.employees = employees;
         this.internalCode = internalCode;
+        this.employees = employees;
         this.timeCreated = timeCreated;
     }
 

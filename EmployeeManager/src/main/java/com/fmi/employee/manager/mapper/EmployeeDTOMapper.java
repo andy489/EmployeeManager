@@ -1,14 +1,25 @@
 package com.fmi.employee.manager.mapper;
 
-import com.fmi.employee.manager.dto.EmployeeDTO;
-import com.fmi.employee.manager.dto.EmployeeDTOWithID;
+import com.fmi.employee.manager.dto.EmpDTO;
+import com.fmi.employee.manager.dto.EmpDTOWithId;
 import com.fmi.employee.manager.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class EmployeeDTOMapper {
-    public EmployeeDTO toDTO(Employee employee) {
-        return new EmployeeDTO(
+
+    private final JobDTOMapper jobMapper;
+    private final OrgDTOMapper orgMapper;
+
+    @Autowired
+    public EmployeeDTOMapper(JobDTOMapper jobMapper, OrgDTOMapper orgMapper){
+        this.jobMapper=jobMapper;
+        this.orgMapper=orgMapper;
+    }
+
+    public EmpDTO toDTO(Employee employee) {
+        return new EmpDTO(
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getEmail(),
@@ -21,8 +32,8 @@ public class EmployeeDTOMapper {
         );
     }
 
-    public EmployeeDTOWithID toDTOWithId(Employee employee) {
-        return new EmployeeDTOWithID(
+    public EmpDTOWithId toDTOWithId(Employee employee) {
+        return new EmpDTOWithId(
                 employee.getId(),
                 employee.getFirstName(),
                 employee.getLastName(),
@@ -31,8 +42,8 @@ public class EmployeeDTOMapper {
                 employee.getHireDate(),
                 employee.getSalary(),
                 employee.getTopSkill(),
-                employee.getJob().getInternalCode(),
-                employee.getOrg().getInternalCode()
+                jobMapper.toDTO(employee.getJob()),
+                orgMapper.toDTO(employee.getOrg())
         );
     }
 }

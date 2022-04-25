@@ -2,6 +2,7 @@ package com.fmi.employee.manager.controller;
 
 import com.fmi.employee.manager.dto.OrgDTO;
 import com.fmi.employee.manager.dto.OrgDTOWithId;
+import com.fmi.employee.manager.mapper.OrgDTOMapper;
 import com.fmi.employee.manager.model.Organization;
 import com.fmi.employee.manager.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,12 @@ import java.util.Map;
 public class OrganizationController {
 
     private final OrganizationService orgService;
+    private final OrgDTOMapper mapper;
 
     @Autowired
-    public OrganizationController(OrganizationService orgService) {
+    public OrganizationController(OrganizationService orgService, OrgDTOMapper mapper) {
         this.orgService = orgService;
+        this.mapper = mapper;
     }
 
     // http://localhost:8080/api/org/template
@@ -73,7 +76,7 @@ public class OrganizationController {
     // http://localhost:8080/api/org/code/AB123
     @GetMapping("org/code/{code}")
     public ResponseEntity<OrgDTO> getOrgByInternalCode(@PathVariable("code") String orgInternalCode) {
-        return new ResponseEntity<>(orgService.getOrgByInternalCode(orgInternalCode), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDTO(orgService.getOrgByInternalCode(orgInternalCode)), HttpStatus.OK);
     }
 
     // http://localhost:8080/api/org/2

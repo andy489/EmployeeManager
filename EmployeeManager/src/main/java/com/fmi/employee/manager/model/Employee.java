@@ -1,8 +1,10 @@
 package com.fmi.employee.manager.model;
 
-import com.fmi.employee.manager.dto.EmployeeDTO;
-import com.fmi.employee.manager.dto.EmployeeDTOWithID;
+import com.fmi.employee.manager.dto.EmpDTO;
+import com.fmi.employee.manager.dto.EmpDTOWithId;
+import com.fmi.employee.manager.dto.JobDTO;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "employees")
 public class Employee implements Serializable {
@@ -50,7 +53,36 @@ public class Employee implements Serializable {
     @JoinColumn(name = "org_id", nullable = false)
     private Organization org;
 
-    public void update(EmployeeDTO employeeDTO) {
+    public Employee() {
+    }
+
+    public Employee(
+            Long id,
+            String firstName,
+            String lastName,
+            String email,
+            String phone,
+            LocalDateTime hireDate,
+            Double salary,
+            String topSkill,
+            LocalDateTime timeCreated,
+            Job job,
+            Organization org
+    ) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.hireDate = hireDate;
+        this.salary = salary;
+        this.topSkill = topSkill;
+        this.timeCreated = timeCreated;
+        this.job = job;
+        this.org = org;
+    }
+
+    public void update(EmpDTO employeeDTO) {
         firstName = employeeDTO.getFirstName();
         lastName = employeeDTO.getLastName();
         email = employeeDTO.getEmail();
@@ -63,7 +95,7 @@ public class Employee implements Serializable {
         // Organization org
     }
 
-    public void update(EmployeeDTOWithID employeeDTOWithID) {
+    public void update(EmpDTOWithId employeeDTOWithID) {
         id = employeeDTOWithID.getId();
         firstName = employeeDTOWithID.getFirstName();
         lastName = employeeDTOWithID.getLastName();

@@ -2,6 +2,7 @@ package com.fmi.employee.manager.controller;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
+import com.fmi.employee.manager.mapper.JobDTOMapper;
 import com.fmi.employee.manager.model.Job;
 import com.fmi.employee.manager.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,12 @@ import java.util.Map;
 public class JobController {
 
     private final JobService jobService;
+    private final JobDTOMapper mapper;
 
     @Autowired
-    public JobController(JobService jobService) {
+    public JobController(JobService jobService, JobDTOMapper mapper) {
         this.jobService = jobService;
+        this.mapper = mapper;
     }
 
     // http://localhost:8080/api/job/template
@@ -43,8 +46,8 @@ public class JobController {
                 "test-name",
                 "test-description",
                 0,
-                Collections.emptyList(),
                 "test-internal-code",
+                Collections.emptyList(),
                 LocalDateTime.now()
         );
     }
@@ -76,7 +79,7 @@ public class JobController {
     // http://localhost:8080/api/job/code/CV4S5
     @GetMapping("job/code/{code}")
     public ResponseEntity<JobDTO> getJobByInternalCode(@PathVariable("code") String jobInternalCode) {
-        return new ResponseEntity<>(jobService.getJobByInternalCode(jobInternalCode), HttpStatus.OK);
+        return new ResponseEntity<>(mapper.toDTO(jobService.getJobByInternalCode(jobInternalCode)), HttpStatus.OK);
     }
 
     // http://localhost:8080/api/job/keywords?word=data,end
