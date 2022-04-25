@@ -114,6 +114,16 @@
     "id": 2
 }
 
+// GET [Get Organization By Internal Code]
+// http://localhost:8080/api/org/code/XZBBZ
+// RESPONSE
+{
+    "name": "Evolution",
+    "website": "www.evolution.com",
+    "employees": [],
+    "internalCode": "XZBBZ"
+}
+
 // PATCH [Update Organization By Id Partially]
 // http://localhost:8080/api/org/2
 // BODY 
