@@ -144,6 +144,17 @@
     "id": 7
 }
 
+// GET [Get Job By Internal Code]
+// http://localhost:8080/api/job/code/CV4S5
+// RESPONSE
+{
+    "name": "SENIOR RUBY DEVELOPER",
+    "description": "Writing effective and scalable code in Ruby; Building back-end components for web applications; Testing applications for performance, responsiveness and security; etc.",
+    "minimalSalary": 3450,
+    "employees": [],
+    "internalCode": "CV4S5"
+}
+
 // GET [Get Job By Keyword(s)]
 // http://localhost:8080/api/job/keywords?word=data,end
 // http://localhost:8080/api/job/keywords?word=data&word=end
