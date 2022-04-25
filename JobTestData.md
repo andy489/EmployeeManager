@@ -222,4 +222,15 @@
 // http://localhost:8080/api/job/7
 // RESPONSE
 [200 OK] ~Job with id %d was deleted successfully.
+
+// POST [Save Single Job]
+// http://localhost:8080/api/job
+// BODY
+{
+    "name": "GAME CONFIGURATOR",
+    "description": "Creat, design and provide proofs for Game required Parameters",
+    "minimalSalary": 987,
+    "internalCode": "123ER",
+    "employees": []
+}
 ```
