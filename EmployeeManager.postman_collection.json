@@ -1,0 +1,536 @@
+{
+	"info": {
+		"_postman_id": "b1bf4118-b9bd-4e43-967b-79b4368bc5cb",
+		"name": "EmployeeManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "JobController",
+			"item": [
+				{
+					"name": "GetJobTemplate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/template",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateJob",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"GAME CONFIGURATOR\",\n    \"description\": \"Creat, design and configure games.\",\n    \"minimalSalary\": 2222,\n    \"internalCode\": \"GCNF\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateJobs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\": \"CYBER SECURITY ENGINEER\",\n        \"description\": \"Planning, implementing, managing, monitoring, and upgrading security measures for the protection of the organization's data, systems, and networks; Troubleshooting security and network problems; etc.\",\n        \"minimalSalary\": 4230,\n        \"internalCode\" : \"CSCENG\"\n    },\n\n    {\n        \"name\": \"WEB DEVELOPER\",\n        \"description\": \"Creating website layout/user interfaces by using standard HTML/CSS practices; Integrating data from various back-end services and databases; etc.\",\n        \"minimalSalary\": 2770,\n        \"internalCode\" : \"WBDVP\"\n    },\n\n    {\n        \"name\": \"DATA ENGINEER\",\n        \"description\": \"Managing end-to-end data pipelines to source and transform data to the Data & Analytics Platform(s); Integrating new data sources (internal and external) by creating a full pipeline from ingestion to ETL process\",\n        \"minimalSalary\": 3900,\n        \"internalCode\" : \"DTENG\"\n    },\n\n    {\n        \"name\": \"PHP DEVELOPER\",\n        \"description\": \"Writing clean, fast PHP to a high standard, in a timely and scalable way; Producing detailed specifications; etc.\",\n        \"minimalSalary\": 4700,\n        \"internalCode\" : \"PHPDVP\"\n    },\n\n    {\n        \"name\": \"SENIOR RUBY DEVELOPER\",\n        \"description\": \"Writing effective and scalable code in Ruby; Building back-end components for web applications; Testing applications for performance, responsiveness and security; etc.\",\n        \"minimalSalary\": 5450,\n        \"internalCode\" : \"SRDVP\"\n\n    },\n\n    {\n        \"name\": \"DEVOPS ENGINEER\",\n        \"description\": \"Implementing integrations requested by customers; Deploying updates and fixes; Providing Level 2 technical support; etc.\",\n        \"minimalSalary\": 5900,\n        \"internalCode\" : \"DVPSDVP\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/jobs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"jobs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllJobs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJobById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/id/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJobByInternalCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/code/SRDVP",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"code",
+								"SRDVP"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJobsByKeywords",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/keywords?words=data&end",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"keywords"
+							],
+							"query": [
+								{
+									"key": "words",
+									"value": "data"
+								},
+								{
+									"key": "end",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAverageMinSalary",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJobsWithMinSalaryAtLeast",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/s/5000",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"s",
+								"5000"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PartialUpdateJob",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"minimalSalary\": 3655\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/job/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteJob",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/job/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"job",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "OrganizationController",
+			"item": [
+				{
+					"name": "GetOrgTemplate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/org/template",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org",
+								"template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateOrg",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Uber\",\n    \"website\": \"www.uber.com\",\n    \"internalCode\": \"UBE\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/org",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateOrgs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n        \"name\": \"Dreamix\",\n        \"website\": \"www.dreamix.eu\",\n        \"internalCode\": \"DRE\"\n    },\n\n    {\n        \"name\": \"Evolution\",\n        \"website\": \"www.evolution.com\",\n        \"internalCode\": \"EVO\"\n    },\n\n    {\n        \"name\": \"IBM\",\n        \"website\": \"www.ibm.com\",\n        \"internalCode\": \"IBM\"\n    },\n\n    {\n        \"name\": \"Oracle\",\n        \"website\": \"www.oracle.com\",\n        \"internalCode\": \"ORA\"\n    },\n\n    {\n        \"name\": \"VM Ware\",\n        \"website\": \"www.vmware.com\",\n        \"internalCode\": \"VMW\"\n    }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/orgs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"orgs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllOrgs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/org",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrgById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/org/id/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org",
+								"id",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetOrgByInternalCode",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/org/code/EVO",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org",
+								"code",
+								"EVO"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PartialUpdateOrg",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"internalCode\": \"E7O\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/org/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteOrg",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/org/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"org",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "EmployeeController",
+			"item": [
+				{
+					"name": "GetEmpTemplate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/emp/template",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"emp",
+								"template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveEmployee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Andrey\",\n    \"lastName\": \"Stoev\",\n    \"email\": \"stoev.andy@gmail.com\",\n    \"phone\": \"+3590887123456\",\n    \"hireDate\": \"2022-04-26T09:30:00.000000\",\n    \"salary\": 5650.0,\n    \"topSkill\": \"Statistics\",\n    \n    \"jobCode\": \"GCNF\",\n    \"orgCode\": \"E7O\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/emp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"emp"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
