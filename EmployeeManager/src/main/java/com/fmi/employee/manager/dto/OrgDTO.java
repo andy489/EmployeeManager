@@ -1,5 +1,6 @@
 package com.fmi.employee.manager.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fmi.employee.manager.model.Employee;
 import lombok.Getter;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public class OrgDTO {
     private String name;
     private String website;
+
+    @JsonIgnoreProperties(value = "org") // use DTO instead entity
     private List<Employee> employees;
 
     private String internalCode;

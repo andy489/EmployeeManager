@@ -37,8 +37,7 @@ public class Job implements Serializable {
     @Column(unique = true)
     private String internalCode;
 
-    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
     private List<Employee> employees;
 
     @CreationTimestamp
@@ -69,7 +68,6 @@ public class Job implements Serializable {
         name = jobDTO.getName();
         description = jobDTO.getDescription();
         minimalSalary = jobDTO.getMinimalSalary();
-        employees = jobDTO.getEmployees();
         internalCode = jobDTO.getInternalCode();
     }
 
@@ -80,5 +78,6 @@ public class Job implements Serializable {
         minimalSalary = jobDTOWithId.getMinimalSalary();
         employees = jobDTOWithId.getEmployees();
         internalCode = jobDTOWithId.getInternalCode();
+        timeCreated = LocalDateTime.now();
     }
 }

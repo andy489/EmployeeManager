@@ -35,8 +35,7 @@ public class Organization implements Serializable {
     @Column(unique = true)
     private String internalCode;
 
-    @OneToMany(mappedBy = "org", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "org", fetch = FetchType.LAZY)
     private List<Employee> employees;
 
     @CreationTimestamp
@@ -74,5 +73,6 @@ public class Organization implements Serializable {
         website = orgDTOWithId.getWebsite();
         employees = orgDTOWithId.getEmployees();
         internalCode = orgDTOWithId.getInternalCode();
+        timeCreated = LocalDateTime.now();
     }
 }

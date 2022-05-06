@@ -1,5 +1,6 @@
 package com.fmi.employee.manager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
 import com.fmi.employee.manager.dto.JobDTO;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,7 +29,7 @@ public class Employee implements Serializable {
     private static final long serialVersionUID = 3L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
@@ -45,11 +47,11 @@ public class Employee implements Serializable {
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "org_id", nullable = false)
     private Organization org;
 

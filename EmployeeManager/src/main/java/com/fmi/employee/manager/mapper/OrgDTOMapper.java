@@ -2,6 +2,7 @@ package com.fmi.employee.manager.mapper;
 
 import com.fmi.employee.manager.dto.OrgDTO;
 import com.fmi.employee.manager.dto.OrgDTOWithId;
+import com.fmi.employee.manager.dto.OrgDTOWithoutEmployees;
 import com.fmi.employee.manager.model.Organization;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,21 @@ public class OrgDTOMapper {
     }
 
     public OrgDTOWithId toDTOWithId(Organization org) {
-        return new OrgDTOWithId(org.getId(), org.getName(), org.getWebsite(), org.getInternalCode(), org.getEmployees());
+        return new OrgDTOWithId(
+                org.getId(),
+                org.getName(),
+                org.getWebsite(),
+                org.getInternalCode(),
+                org.getEmployees()
+        );
+    }
+
+    public OrgDTOWithoutEmployees toOrgDTOWothoutEmployees(Organization org) {
+        return new OrgDTOWithoutEmployees(
+                org.getName(),
+                org.getWebsite(),
+                org.getInternalCode()
+        );
     }
 
     public List<OrgDTO> toDTOList(List<Organization> orgList) {

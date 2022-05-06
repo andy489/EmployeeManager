@@ -2,6 +2,7 @@ package com.fmi.employee.manager.controller;
 
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
+import com.fmi.employee.manager.dto.EmpDTOWithJobAndOrg;
 import com.fmi.employee.manager.mapper.EmployeeDTOMapper;
 import com.fmi.employee.manager.model.Employee;
 import com.fmi.employee.manager.model.Job;
@@ -68,7 +69,7 @@ public class EmployeeController {
 
     // http://localhost:8080/api/emp
     @PostMapping("emp")
-    public ResponseEntity<EmpDTOWithId> saveSingleJob(@RequestBody EmpDTO empDTO) {
+    public ResponseEntity<EmpDTOWithJobAndOrg> saveSingleEmployee(@RequestBody EmpDTO empDTO) {
         return new ResponseEntity<>(empService.saveEmployee(empDTO), HttpStatus.CREATED);
     }
 }

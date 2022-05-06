@@ -1,11 +1,14 @@
 package com.fmi.employee.manager.dto;
 
 import com.sun.istack.NotNull;
+import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 public class EmpDTO {
     private String firstName;
     private String lastName;

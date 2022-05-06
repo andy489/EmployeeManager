@@ -143,7 +143,7 @@ public class JobServiceImpl implements JobService {
 
         Optional<Job> searchedJob = jobRepo.findById(searchedId);
 
-        if (searchedJob.isEmpty()) {
+        if (searchedJob.isEmpty() || !searchedJob.get().getName().equals(jobDTOWithId.getName())) {
             throw new ResourceNotFoundException("Job", "id", searchedId);
         }
 

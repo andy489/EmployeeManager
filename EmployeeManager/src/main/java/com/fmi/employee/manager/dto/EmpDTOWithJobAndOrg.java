@@ -1,14 +1,12 @@
 package com.fmi.employee.manager.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
-public class EmpDTOWithId {
-    private final Long id;
-
+public class EmpDTOWithJobAndOrg {
     private String firstName;
     private String lastName;
 
@@ -20,13 +18,15 @@ public class EmpDTOWithId {
     private Double salary;
     private String topSkill;
 
-    @JsonIgnoreProperties(value = "employees")
-    private JobDTO jobDTO;
-    @JsonIgnoreProperties(value = "employees")
-    private OrgDTO orgDTO;
+    @NotNull
+    private JobDTOWithoutEmployees jobDTOWithoutEmployees;
+    @NotNull
+    private OrgDTOWithoutEmployees orgDTOWithoutEmployees;
 
-    public EmpDTOWithId(
-            Long id,
+    public EmpDTOWithJobAndOrg() {
+    }
+
+    public EmpDTOWithJobAndOrg(
             String firstName,
             String lastName,
             String email,
@@ -34,10 +34,9 @@ public class EmpDTOWithId {
             LocalDateTime hireDate,
             Double salary,
             String topSkill,
-            JobDTO jobDTO,
-            OrgDTO orgDTO
+            JobDTOWithoutEmployees jobDTOWithoutEmployees,
+            OrgDTOWithoutEmployees orgDTOWithoutEmployees
     ) {
-        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -45,7 +44,8 @@ public class EmpDTOWithId {
         this.hireDate = hireDate;
         this.salary = salary;
         this.topSkill = topSkill;
-        this.jobDTO = jobDTO;
-        this.orgDTO = orgDTO;
+
+        this.jobDTOWithoutEmployees = jobDTOWithoutEmployees;
+        this.orgDTOWithoutEmployees = orgDTOWithoutEmployees;
     }
 }

@@ -2,6 +2,7 @@ package com.fmi.employee.manager.service.impl;
 
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
+import com.fmi.employee.manager.dto.EmpDTOWithJobAndOrg;
 import com.fmi.employee.manager.mapper.EmployeeDTOMapper;
 import com.fmi.employee.manager.model.Employee;
 import com.fmi.employee.manager.model.Job;
@@ -36,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmpDTOWithId saveEmployee(EmpDTO employeeDTO) {
+    public EmpDTOWithJobAndOrg saveEmployee(EmpDTO employeeDTO) {
         Employee employeeToReturn = new Employee();
 
         employeeToReturn.update(employeeDTO); // Missing JOB and ORG <- find them by internal code
@@ -49,6 +50,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         employeeRepo.save(employeeToReturn);
 
-        return mapper.toDTOWithId(employeeToReturn);
+        return mapper.toDTOWithJobAndOrg(employeeToReturn);
     }
 }

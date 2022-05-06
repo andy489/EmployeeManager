@@ -2,6 +2,8 @@ package com.fmi.employee.manager.mapper;
 
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
+import com.fmi.employee.manager.dto.EmpDTOWithJobAndOrg;
+import com.fmi.employee.manager.dto.OrgDTOWithoutEmployees;
 import com.fmi.employee.manager.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,9 +15,9 @@ public class EmployeeDTOMapper {
     private final OrgDTOMapper orgMapper;
 
     @Autowired
-    public EmployeeDTOMapper(JobDTOMapper jobMapper, OrgDTOMapper orgMapper){
-        this.jobMapper=jobMapper;
-        this.orgMapper=orgMapper;
+    public EmployeeDTOMapper(JobDTOMapper jobMapper, OrgDTOMapper orgMapper) {
+        this.jobMapper = jobMapper;
+        this.orgMapper = orgMapper;
     }
 
     public EmpDTO toDTO(Employee employee) {
@@ -44,6 +46,21 @@ public class EmployeeDTOMapper {
                 employee.getTopSkill(),
                 jobMapper.toDTO(employee.getJob()),
                 orgMapper.toDTO(employee.getOrg())
+        );
+    }
+
+    public EmpDTOWithJobAndOrg toDTOWithJobAndOrg(Employee employee) {
+        return new EmpDTOWithJobAndOrg(
+                employee.getFirstName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getPhone(),
+                employee.getHireDate(),
+                employee.getSalary(),
+                employee.getTopSkill(),
+
+                jobMapper.toJobDTOWithoutEmployees(employee.getJob()),
+                orgMapper.toOrgDTOWothoutEmployees(employee.getOrg())
         );
     }
 }

@@ -4,33 +4,31 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fmi.employee.manager.model.Employee;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
-public class JobDTO {
+public class JobDTOWithoutEmployees implements Serializable {
+    private static final long serialVersionUID = 3L;
+
     private String name;
     private String description;
     private Integer minimalSalary;
 
-    @JsonIgnoreProperties(value = "job") // use EmpDTO
-    private List<Employee> employees;
-
     private String internalCode;
 
-    public JobDTO() {
+    public JobDTOWithoutEmployees() {
     }
 
-    public JobDTO(
+    public JobDTOWithoutEmployees(
             String name,
             String description,
             Integer minimalSalary,
-            String internalCode,
-            List<Employee> employees
+            String internalCode
     ) {
         this.name = name;
         this.description = description;
         this.minimalSalary = minimalSalary;
         this.internalCode = internalCode;
-        this.employees = employees;
     }
 }

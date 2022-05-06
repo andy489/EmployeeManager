@@ -2,6 +2,7 @@ package com.fmi.employee.manager.mapper;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
+import com.fmi.employee.manager.dto.JobDTOWithoutEmployees;
 import com.fmi.employee.manager.model.Job;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,15 @@ public class JobDTOMapper {
                 job.getMinimalSalary(),
                 job.getInternalCode(),
                 job.getEmployees()
+        );
+    }
+
+    public JobDTOWithoutEmployees toJobDTOWithoutEmployees(Job job) {
+        return new JobDTOWithoutEmployees(
+                job.getName(),
+                job.getDescription(),
+                job.getMinimalSalary(),
+                job.getInternalCode()
         );
     }
 
