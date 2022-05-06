@@ -2,6 +2,7 @@ package com.fmi.employee.manager.controller;
 
 import com.fmi.employee.manager.dto.OrgDTO;
 import com.fmi.employee.manager.dto.OrgDTOWithId;
+import com.fmi.employee.manager.dto.OrgDTOWithoutEmployees;
 import com.fmi.employee.manager.mapper.OrgDTOMapper;
 import com.fmi.employee.manager.model.Organization;
 import com.fmi.employee.manager.service.OrganizationService;
@@ -13,11 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -36,7 +37,6 @@ public class OrganizationController {
         this.mapper = mapper;
     }
 
-    // http://localhost:8080/api/org/template
     @GetMapping("org/template")
     public Organization getJSONTemplate() {
         return new Organization(
@@ -49,37 +49,33 @@ public class OrganizationController {
         );
     }
 
-    // http://localhost:8080/api/org
     @PostMapping("org")
-    public ResponseEntity<OrgDTOWithId> saveSingleOrg(@RequestBody OrgDTO orgDTO) {
-        return new ResponseEntity<>(orgService.saveOrg(orgDTO), HttpStatus.CREATED);
+    public ResponseEntity<OrgDTOWithId> saveSingleOrg(@RequestBody OrgDTOWithoutEmployees orgDTOWithoutEmployees) {
+        return new ResponseEntity<>(orgService.saveOrg(orgDTOWithoutEmployees), HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/api/orgs
     @PostMapping("orgs")
-    public ResponseEntity<List<OrgDTOWithId>> saveMultipleJobs(@RequestBody List<OrgDTO> orgDTO) {
-        return new ResponseEntity<>(orgService.saveAll(orgDTO), HttpStatus.CREATED);
+    public ResponseEntity<List<OrgDTOWithId>> saveMultipleJobs(
+            @RequestBody List<OrgDTOWithoutEmployees> orgDTOWithoutEmployees
+    ) {
+        return new ResponseEntity<>(orgService.saveAll(orgDTOWithoutEmployees), HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/api/org
     @GetMapping("org")
     public ResponseEntity<List<OrgDTO>> listOrgs() {
         return new ResponseEntity<>(orgService.getAllOrgs(), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/org/id/2
     @GetMapping("org/id/{id}")
     public ResponseEntity<OrgDTOWithId> getOrgById(@PathVariable("id") Long orgId) {
         return new ResponseEntity<>(orgService.getOrgById(orgId), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/org/code/AB123
     @GetMapping("org/code/{code}")
     public ResponseEntity<OrgDTO> getOrgByInternalCode(@PathVariable("code") String orgInternalCode) {
         return new ResponseEntity<>(mapper.toDTO(orgService.getOrgByInternalCode(orgInternalCode)), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/org/2
     @PatchMapping("org/{id}")
     public ResponseEntity<OrgDTOWithId> partialUpdateOrg(
             @PathVariable("id") Long jobId,
@@ -88,16 +84,13 @@ public class OrganizationController {
         return new ResponseEntity<>(orgService.partialUpdateOrg(jobId, fields), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/org
-    @PutMapping("org")
-    public ResponseEntity<OrgDTOWithId> updateOrg(@RequestBody OrgDTOWithId jobDTOWithId) {
-        return new ResponseEntity<>(orgService.updateOrg(jobDTOWithId), HttpStatus.OK);
-    }
-
-    // http://localhost:8080/api/org/10
+    @Transactional
     @DeleteMapping("/org/{id}")
     public ResponseEntity<String> deleteOrg(@PathVariable("id") Long orgId) {
-        orgService.deleteOrg(orgId);
-        return new ResponseEntity<>(String.format("~Job with id %d was deleted successfully.", orgId), HttpStatus.OK);
+        OrgDTO deletedOrg = orgService.deleteOrg(orgId);
+        return new ResponseEntity<>(
+                String.format("~Organization \"%s\" with id %d was deleted successfully.",
+                        deletedOrg.getName(), orgId
+                ), HttpStatus.OK);
     }
 }

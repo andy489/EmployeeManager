@@ -2,7 +2,11 @@ package com.fmi.employee.manager.model;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.CascadeType;
@@ -12,7 +16,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -20,6 +23,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "jobs")
 public class Job implements Serializable {
@@ -30,8 +37,11 @@ public class Job implements Serializable {
     @Column(name = "job_id", nullable = false)
     private Long id;
 
+    @Column
     private String name;
+    @Column
     private String description;
+    @Column
     private Integer minimalSalary;
 
     @Column(unique = true)
@@ -40,44 +50,7 @@ public class Job implements Serializable {
     @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
     private List<Employee> employees;
 
+    @Column
     @CreationTimestamp
     private LocalDateTime timeCreated;
-
-    public Job(Long id,
-               String name,
-               String description,
-               Integer minimalSalary,
-               String internalCode,
-               List<Employee> employees,
-               LocalDateTime timeCreated
-    ) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.minimalSalary = minimalSalary;
-        this.internalCode = internalCode;
-        this.employees = employees;
-        this.timeCreated = timeCreated;
-    }
-
-    public Job() {
-
-    }
-
-    public void update(JobDTO jobDTO) {
-        name = jobDTO.getName();
-        description = jobDTO.getDescription();
-        minimalSalary = jobDTO.getMinimalSalary();
-        internalCode = jobDTO.getInternalCode();
-    }
-
-    public void update(JobDTOWithId jobDTOWithId) {
-        id = jobDTOWithId.getId();
-        name = jobDTOWithId.getName();
-        description = jobDTOWithId.getDescription();
-        minimalSalary = jobDTOWithId.getMinimalSalary();
-        employees = jobDTOWithId.getEmployees();
-        internalCode = jobDTOWithId.getInternalCode();
-        timeCreated = LocalDateTime.now();
-    }
 }

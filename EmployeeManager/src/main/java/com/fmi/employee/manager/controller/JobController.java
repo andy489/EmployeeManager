@@ -2,6 +2,7 @@ package com.fmi.employee.manager.controller;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
+import com.fmi.employee.manager.dto.JobDTOWithoutEmployees;
 import com.fmi.employee.manager.mapper.JobDTOMapper;
 import com.fmi.employee.manager.model.Job;
 import com.fmi.employee.manager.service.JobService;
@@ -13,12 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.transaction.Transactional;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -38,7 +39,6 @@ public class JobController {
         this.mapper = mapper;
     }
 
-    // http://localhost:8080/api/job/template
     @GetMapping("job/template")
     public Job getJSONTemplate() {
         return new Job(
@@ -52,41 +52,36 @@ public class JobController {
         );
     }
 
-    // http://localhost:8080/api/job
     @PostMapping("job")
-    public ResponseEntity<JobDTOWithId> saveSingleJob(@RequestBody JobDTO jobDTO) {
-        return new ResponseEntity<>(jobService.saveJob(jobDTO), HttpStatus.CREATED);
+    public ResponseEntity<JobDTOWithId> saveSingleJob(@RequestBody JobDTOWithoutEmployees jobDTOWithoutEmployees) {
+        return new ResponseEntity<>(jobService.saveJob(jobDTOWithoutEmployees), HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/api/jobs
     @PostMapping("jobs")
-    public ResponseEntity<List<JobDTOWithId>> saveMultipleJobs(@RequestBody List<JobDTO> jobDTO) {
-        return new ResponseEntity<>(jobService.saveAll(jobDTO), HttpStatus.CREATED);
+    public ResponseEntity<List<JobDTOWithId>> saveMultipleJobs(
+            @RequestBody List<JobDTOWithoutEmployees> jobDTOWithoutEmployees
+    ) {
+        return new ResponseEntity<>(jobService.saveAll(jobDTOWithoutEmployees), HttpStatus.CREATED);
     }
 
-    // http://localhost:8080/api/job
     @GetMapping("job")
     public ResponseEntity<List<JobDTO>> listJobs() {
         return new ResponseEntity<>(jobService.getAllJobs(), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job/7
     @GetMapping("job/id/{id}")
     public ResponseEntity<JobDTOWithId> getJobById(@PathVariable("id") Long jobId) {
         return new ResponseEntity<>(jobService.getJobById(jobId), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job/code/CV4S5
     @GetMapping("job/code/{code}")
     public ResponseEntity<JobDTO> getJobByInternalCode(@PathVariable("code") String jobInternalCode) {
         return new ResponseEntity<>(mapper.toDTO(jobService.getJobByInternalCode(jobInternalCode)), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job/keywords?word=data,end
-    // http://localhost:8080/api/job/keywords?word=data&word=end
     @GetMapping("job/keywords")
     public ResponseEntity<List<JobDTO>> getJobsWithKeywords(
-            @RequestParam(required = false, value = "word") String[] keyWords
+            @RequestParam(required = false, value = "words") String[] keyWords
     ) {
         if (keyWords == null) {
             return listJobs();
@@ -95,7 +90,6 @@ public class JobController {
         return new ResponseEntity<>(jobService.getJobsWithKeywords(keyWords), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job/a
     @GetMapping("job/a")
     public ResponseEntity<String> getAverageMinJobSalary() {
         final DecimalFormat df = new DecimalFormat("0.00");
@@ -103,13 +97,11 @@ public class JobController {
         return new ResponseEntity<>(df.format(jobService.getAverageMinJobSalary()), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job/s/3000
     @GetMapping("/job/s/{salary}")
     public ResponseEntity<List<JobDTO>> getJobWitMinSalaryAtLeast(@PathVariable("salary") Integer minSalary) {
         return new ResponseEntity<>(jobService.getJobsWithMinSalaryAtLeast(minSalary), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job/7
     @PatchMapping("job/{id}")
     public ResponseEntity<JobDTOWithId> partialUpdateJob(
             @PathVariable("id") Long jobId,
@@ -118,16 +110,14 @@ public class JobController {
         return new ResponseEntity<>(jobService.partialUpdateJob(jobId, fields), HttpStatus.OK);
     }
 
-    // http://localhost:8080/api/job
-    @PutMapping("job")
-    public ResponseEntity<JobDTOWithId> updateJob(@RequestBody JobDTOWithId jobDTOWithId) {
-        return new ResponseEntity<>(jobService.updateJob(jobDTOWithId), HttpStatus.OK);
-    }
-
-    // http://localhost:8080/api/job/7
+    @Transactional
     @DeleteMapping("/job/{id}")
     public ResponseEntity<String> deleteJob(@PathVariable("id") Long jobId) {
-        jobService.deleteJob(jobId);
-        return new ResponseEntity<>(String.format("~Job with id %d was deleted successfully.", jobId), HttpStatus.OK);
+        JobDTO deletedJob = jobService.deleteJob(jobId);
+        return new ResponseEntity<>(
+                String.format(
+                        "~Job \"%s\" with id %d was deleted successfully.",
+                        deletedJob.getName(), jobId
+                ), HttpStatus.OK);
     }
 }

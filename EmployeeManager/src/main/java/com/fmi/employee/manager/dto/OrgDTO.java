@@ -2,26 +2,21 @@ package com.fmi.employee.manager.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fmi.employee.manager.model.Employee;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrgDTO {
     private String name;
     private String website;
 
-    @JsonIgnoreProperties(value = "org") // use DTO instead entity
-    private List<Employee> employees;
+    @JsonIgnoreProperties(value = {"org", "job"})
+    private List<EmpDTOWithoutInternalCodes> employees;
 
     private String internalCode;
-
-    public OrgDTO() {}
-
-    public OrgDTO(String name, String website, String internalCode, List<Employee> employees) {
-        this.name = name;
-        this.website = website;
-        this.internalCode = internalCode;
-        this.employees = employees;
-    }
 }

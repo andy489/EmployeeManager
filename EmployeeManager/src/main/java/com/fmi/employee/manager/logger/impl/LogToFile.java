@@ -24,13 +24,11 @@ public class LogToFile implements Logger {
 
     @PostConstruct
     public void setup() {
-        // System.out.println(appConfig.getLogger().getLvl());
         loggerLevel = LoggerLevel.valueOf(appConfig.getLogger().getLvl());
     }
 
     @Override
     public void info(Object toLog) {
-        // System.out.println(appConfig.getLogger().getLvl());
         LoggerLevel currentLogger = LoggerLevel.INFO;
 
         if (isLoggingAllowed(currentLogger)) {

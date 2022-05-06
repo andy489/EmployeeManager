@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
 import com.fmi.employee.manager.dto.JobDTO;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,6 +26,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "employees")
 public class Employee implements Serializable {
@@ -33,81 +39,32 @@ public class Employee implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column
     private String firstName;
+    @Column
     private String lastName;
 
+    @Column
     private String email;
+    @Column
     private String phone;
 
+    @Column
     private LocalDateTime hireDate;
 
+    @Column
     private Double salary;
+    @Column
     private String topSkill;
 
     @CreationTimestamp
     private LocalDateTime timeCreated;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
     private Job job;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "org_id", nullable = false)
     private Organization org;
-
-    public Employee() {
-    }
-
-    public Employee(
-            Long id,
-            String firstName,
-            String lastName,
-            String email,
-            String phone,
-            LocalDateTime hireDate,
-            Double salary,
-            String topSkill,
-            LocalDateTime timeCreated,
-            Job job,
-            Organization org
-    ) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.hireDate = hireDate;
-        this.salary = salary;
-        this.topSkill = topSkill;
-        this.timeCreated = timeCreated;
-        this.job = job;
-        this.org = org;
-    }
-
-    public void update(EmpDTO employeeDTO) {
-        firstName = employeeDTO.getFirstName();
-        lastName = employeeDTO.getLastName();
-        email = employeeDTO.getEmail();
-        phone = employeeDTO.getPhone();
-        hireDate = employeeDTO.getHireDate();
-        salary = employeeDTO.getSalary();
-        topSkill = employeeDTO.getTopSkill();
-
-        // Job job
-        // Organization org
-    }
-
-    public void update(EmpDTOWithId employeeDTOWithID) {
-        id = employeeDTOWithID.getId();
-        firstName = employeeDTOWithID.getFirstName();
-        lastName = employeeDTOWithID.getLastName();
-        email = employeeDTOWithID.getEmail();
-        phone = employeeDTOWithID.getPhone();
-        hireDate = employeeDTOWithID.getHireDate();
-        salary = employeeDTOWithID.getSalary();
-        topSkill = employeeDTOWithID.getTopSkill();
-
-        // Job job
-        // Organization org
-    }
 }

@@ -2,11 +2,13 @@ package com.fmi.employee.manager.mapper;
 
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
-import com.fmi.employee.manager.dto.EmpDTOWithJobAndOrg;
-import com.fmi.employee.manager.dto.OrgDTOWithoutEmployees;
+import com.fmi.employee.manager.dto.EmpDTOWithoutInternalCodes;
 import com.fmi.employee.manager.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class EmployeeDTOMapper {
@@ -49,18 +51,19 @@ public class EmployeeDTOMapper {
         );
     }
 
-    public EmpDTOWithJobAndOrg toDTOWithJobAndOrg(Employee employee) {
-        return new EmpDTOWithJobAndOrg(
+    public EmpDTOWithoutInternalCodes toDTOWithoutInternalCode(Employee employee) {
+        return new EmpDTOWithoutInternalCodes(
                 employee.getFirstName(),
                 employee.getLastName(),
                 employee.getEmail(),
                 employee.getPhone(),
                 employee.getHireDate(),
                 employee.getSalary(),
-                employee.getTopSkill(),
-
-                jobMapper.toJobDTOWithoutEmployees(employee.getJob()),
-                orgMapper.toOrgDTOWothoutEmployees(employee.getOrg())
+                employee.getTopSkill()
         );
+    }
+
+    public List<EmpDTOWithoutInternalCodes> toDTOList(List<Employee> empList) {
+        return empList.stream().map(this::toDTOWithoutInternalCode).collect(Collectors.toList());
     }
 }

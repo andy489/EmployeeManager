@@ -2,6 +2,7 @@ package com.fmi.employee.manager.service.impl;
 
 import com.fmi.employee.manager.dto.OrgDTO;
 import com.fmi.employee.manager.dto.OrgDTOWithId;
+import com.fmi.employee.manager.dto.OrgDTOWithoutEmployees;
 import com.fmi.employee.manager.exception.ResourceNotFoundException;
 import com.fmi.employee.manager.mapper.OrgDTOMapper;
 import com.fmi.employee.manager.model.Organization;
@@ -31,18 +32,16 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrgDTOWithId saveOrg(OrgDTO orgDTO) {
-        Organization org = new Organization();
-        org.update(orgDTO);
-
-        return mapper.toDTOWithId(orgRepo.save(org));
+    public OrgDTOWithId saveOrg(OrgDTOWithoutEmployees orgDTOWithoutEmployees) {
+        return mapper.toDTOWithId(orgRepo.save(mapper.toOrg(orgDTOWithoutEmployees)));
     }
 
     @Override
-    public List<OrgDTOWithId> saveAll(List<OrgDTO> orgDTOs) {
-        final int SIZE = orgDTOs.size();
+    public List<OrgDTOWithId> saveAll(List<OrgDTOWithoutEmployees> orgDTOsWithoutEmployees) {
+        final int SIZE = orgDTOsWithoutEmployees.size();
 
-        List<Organization> toAdd = orgDTOs.stream().limit(SIZE).map(mapper::toJob).collect(Collectors.toList());
+        List<Organization> toAdd = orgDTOsWithoutEmployees.stream()
+                .limit(SIZE).map(mapper::toOrg).collect(Collectors.toList());
 
         return orgRepo.saveAll(toAdd).stream().map(mapper::toDTOWithId).collect(Collectors.toList());
     }
@@ -96,24 +95,10 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrgDTOWithId updateOrg(OrgDTOWithId orgDTOWithId) {
-        Long searchedId = orgDTOWithId.getId();
-
-        Optional<Organization> searchedJob = orgRepo.findById(searchedId);
-
-        if (searchedJob.isEmpty()) {
-            throw new ResourceNotFoundException("Organization", "id", searchedId);
-        }
-
-        Organization jobToSave = new Organization();
-        jobToSave.update(orgDTOWithId);
-        return mapper.toDTOWithId(orgRepo.save(jobToSave));
-    }
-
-    @Override
-    public void deleteOrg(Long id) {
-        orgRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Organization", "Id", id));
+    public OrgDTO deleteOrg(Long id) {
+        Organization orgToDelete = orgRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Organization", "Id", id));
         orgRepo.deleteById(id);
-    }
 
+        return mapper.toDTO(orgToDelete);
+    }
 }

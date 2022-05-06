@@ -1,11 +1,15 @@
 package com.fmi.employee.manager.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Getter
+@AllArgsConstructor
+@Builder
 public class EmpDTOWithId {
     private final Long id;
 
@@ -22,30 +26,7 @@ public class EmpDTOWithId {
 
     @JsonIgnoreProperties(value = "employees")
     private JobDTO jobDTO;
+
     @JsonIgnoreProperties(value = "employees")
     private OrgDTO orgDTO;
-
-    public EmpDTOWithId(
-            Long id,
-            String firstName,
-            String lastName,
-            String email,
-            String phone,
-            LocalDateTime hireDate,
-            Double salary,
-            String topSkill,
-            JobDTO jobDTO,
-            OrgDTO orgDTO
-    ) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.phone = phone;
-        this.hireDate = hireDate;
-        this.salary = salary;
-        this.topSkill = topSkill;
-        this.jobDTO = jobDTO;
-        this.orgDTO = orgDTO;
-    }
 }

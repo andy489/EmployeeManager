@@ -2,7 +2,11 @@ package com.fmi.employee.manager.model;
 
 import com.fmi.employee.manager.dto.OrgDTO;
 import com.fmi.employee.manager.dto.OrgDTOWithId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.CascadeType;
@@ -19,8 +23,12 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
 @Table(name = "organizations")
 public class Organization implements Serializable {
     private static final long serialVersionUID = 3L;
@@ -29,7 +37,9 @@ public class Organization implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "org_id", nullable = false)
     private Long id;
+    @Column
     private String name;
+    @Column
     private String website;
 
     @Column(unique = true)
@@ -38,41 +48,7 @@ public class Organization implements Serializable {
     @OneToMany(mappedBy = "org", fetch = FetchType.LAZY)
     private List<Employee> employees;
 
+    @Column
     @CreationTimestamp
     private LocalDateTime timeCreated;
-
-    public Organization() {
-    }
-
-    public Organization(
-            Long id,
-            String name,
-            String website,
-            String internalCode,
-            List<Employee> employees,
-            LocalDateTime timeCreated
-    ) {
-        this.id = id;
-        this.name = name;
-        this.website = website;
-        this.employees = employees;
-        this.internalCode = internalCode;
-        this.timeCreated = timeCreated;
-    }
-
-    public void update(OrgDTO orgDTO) {
-        name = orgDTO.getName();
-        website = orgDTO.getWebsite();
-        employees = orgDTO.getEmployees();
-        internalCode = orgDTO.getInternalCode();
-    }
-
-    public void update(OrgDTOWithId orgDTOWithId) {
-        id = orgDTOWithId.getId();
-        name = orgDTOWithId.getName();
-        website = orgDTOWithId.getWebsite();
-        employees = orgDTOWithId.getEmployees();
-        internalCode = orgDTOWithId.getInternalCode();
-        timeCreated = LocalDateTime.now();
-    }
 }

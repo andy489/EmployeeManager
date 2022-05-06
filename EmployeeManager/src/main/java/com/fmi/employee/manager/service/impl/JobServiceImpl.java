@@ -2,6 +2,7 @@ package com.fmi.employee.manager.service.impl;
 
 import com.fmi.employee.manager.dto.JobDTO;
 import com.fmi.employee.manager.dto.JobDTOWithId;
+import com.fmi.employee.manager.dto.JobDTOWithoutEmployees;
 import com.fmi.employee.manager.exception.ResourceNotFoundException;
 import com.fmi.employee.manager.mapper.JobDTOMapper;
 import com.fmi.employee.manager.model.Job;
@@ -34,18 +35,15 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobDTOWithId saveJob(JobDTO jobDTO) {
-        Job job = new Job();
-        job.update(jobDTO);
-
-        return mapper.toDTOWithId(jobRepo.save(job));
+    public JobDTOWithId saveJob(JobDTOWithoutEmployees jobDTOWithoutEmployees) {
+        return mapper.toDTOWithId(jobRepo.save(mapper.toJob(jobDTOWithoutEmployees)));
     }
 
     @Override
-    public List<JobDTOWithId> saveAll(List<JobDTO> jobDTOs) {
-        final int SIZE = jobDTOs.size();
+    public List<JobDTOWithId> saveAll(List<JobDTOWithoutEmployees> jobDTOsWithoutEmployees) {
+        final int SIZE = jobDTOsWithoutEmployees.size();
 
-        List<Job> toAdd = jobDTOs.stream().limit(SIZE).map(mapper::toJob).collect(Collectors.toList());
+        List<Job> toAdd = jobDTOsWithoutEmployees.stream().limit(SIZE).map(mapper::toJob).collect(Collectors.toList());
 
         return jobRepo.saveAll(toAdd).stream().map(mapper::toDTOWithId).collect(Collectors.toList());
     }
@@ -80,7 +78,8 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<JobDTO> getJobsWithKeywords(String... keywords) {
         List<String> keywordsList = Arrays.stream(keywords)
-                .map(String::toLowerCase).collect(Collectors.toList());
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
 
         final Pattern WORD_SPLIT_PATTERN = Pattern.compile("[^a-zA-Z0-9]+");
 
@@ -138,23 +137,10 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public JobDTOWithId updateJob(JobDTOWithId jobDTOWithId) {
-        Long searchedId = jobDTOWithId.getId();
-
-        Optional<Job> searchedJob = jobRepo.findById(searchedId);
-
-        if (searchedJob.isEmpty() || !searchedJob.get().getName().equals(jobDTOWithId.getName())) {
-            throw new ResourceNotFoundException("Job", "id", searchedId);
-        }
-
-        Job jobToSave = new Job();
-        jobToSave.update(jobDTOWithId);
-        return mapper.toDTOWithId(jobRepo.save(jobToSave));
-    }
-
-    @Override
-    public void deleteJob(Long id) {
-        jobRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Job", "Id", id));
+    public JobDTO deleteJob(Long id) {
+        Job jobToDelete = jobRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Job", "Id", id));
         jobRepo.deleteById(id);
+
+        return mapper.toDTO(jobToDelete);
     }
 }

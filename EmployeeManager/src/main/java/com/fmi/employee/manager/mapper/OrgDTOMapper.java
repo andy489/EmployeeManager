@@ -6,39 +6,48 @@ import com.fmi.employee.manager.dto.OrgDTOWithoutEmployees;
 import com.fmi.employee.manager.model.Organization;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class OrgDTOMapper {
+
     public OrgDTO toDTO(Organization org) {
-        return new OrgDTO(org.getName(), org.getWebsite(), org.getInternalCode(), org.getEmployees());
+        return new OrgDTO(
+                org.getName(),
+                org.getWebsite(),
+                EmployeeMapperHelper.empDTOWithoutInternalCodesList(org.getEmployees()),
+                org.getInternalCode()
+        );
     }
 
-    public Organization toJob(OrgDTO jobDTO) {
-        Organization job = new Organization();
+    public Organization toOrg(OrgDTOWithId orgDTOWithId) {
+        return Organization.builder()
+                .name(orgDTOWithId.getName())
+                .website((orgDTOWithId.getWebsite()))
+                .internalCode(orgDTOWithId.getInternalCode())
+                .employees(Collections.emptyList())
+                .build();
+    }
 
-        job.update(jobDTO);
-
-        return job;
+    public Organization toOrg(OrgDTOWithoutEmployees orgDTOWithoutEmployees) {
+        return Organization.builder()
+                .name(orgDTOWithoutEmployees.getName())
+                .website((orgDTOWithoutEmployees.getWebsite()))
+                .internalCode(orgDTOWithoutEmployees.getInternalCode())
+                .employees(Collections.emptyList())
+                .build();
     }
 
     public OrgDTOWithId toDTOWithId(Organization org) {
-        return new OrgDTOWithId(
-                org.getId(),
-                org.getName(),
-                org.getWebsite(),
-                org.getInternalCode(),
-                org.getEmployees()
-        );
-    }
-
-    public OrgDTOWithoutEmployees toOrgDTOWothoutEmployees(Organization org) {
-        return new OrgDTOWithoutEmployees(
-                org.getName(),
-                org.getWebsite(),
-                org.getInternalCode()
-        );
+        return OrgDTOWithId.builder()
+                .id(org.getId())
+                .name(org.getName())
+                .website(org.getWebsite())
+                .internalCode(org.getInternalCode())
+                .employees(EmployeeMapperHelper.empDTOWithoutInternalCodesList(org.getEmployees()))
+                .build();
     }
 
     public List<OrgDTO> toDTOList(List<Organization> orgList) {

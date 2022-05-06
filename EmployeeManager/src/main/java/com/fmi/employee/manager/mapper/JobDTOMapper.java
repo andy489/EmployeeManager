@@ -6,6 +6,7 @@ import com.fmi.employee.manager.dto.JobDTOWithoutEmployees;
 import com.fmi.employee.manager.model.Job;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,37 +17,39 @@ public class JobDTOMapper {
                 job.getName(),
                 job.getDescription(),
                 job.getMinimalSalary(),
-                job.getInternalCode(),
-                job.getEmployees()
+                EmployeeMapperHelper.empDTOWithoutInternalCodesList(job.getEmployees()),
+                job.getInternalCode()
         );
     }
 
     public Job toJob(JobDTO jobDTO) {
-        Job job = new Job();
+        return Job.builder()
+                .name(jobDTO.getName())
+                .description(jobDTO.getDescription())
+                .minimalSalary(jobDTO.getMinimalSalary())
+                .internalCode(jobDTO.getInternalCode())
+                .build();
+    }
 
-        job.update(jobDTO);
-
-        return job;
+    public Job toJob(JobDTOWithoutEmployees jobDTOWithoutEmployees) {
+        return Job.builder()
+                .name(jobDTOWithoutEmployees.getName())
+                .description(jobDTOWithoutEmployees.getDescription())
+                .minimalSalary(jobDTOWithoutEmployees.getMinimalSalary())
+                .internalCode(jobDTOWithoutEmployees.getInternalCode())
+                .employees(Collections.emptyList())
+                .build();
     }
 
     public JobDTOWithId toDTOWithId(Job job) {
-        return new JobDTOWithId(
-                job.getId(),
-                job.getName(),
-                job.getDescription(),
-                job.getMinimalSalary(),
-                job.getInternalCode(),
-                job.getEmployees()
-        );
-    }
-
-    public JobDTOWithoutEmployees toJobDTOWithoutEmployees(Job job) {
-        return new JobDTOWithoutEmployees(
-                job.getName(),
-                job.getDescription(),
-                job.getMinimalSalary(),
-                job.getInternalCode()
-        );
+        return JobDTOWithId.builder()
+                .id(job.getId())
+                .name(job.getName())
+                .description(job.getDescription())
+                .minSalary(job.getMinimalSalary())
+                .employees(EmployeeMapperHelper.empDTOWithoutInternalCodesList(job.getEmployees()))
+                .internalCode(job.getInternalCode())
+                .build();
     }
 
     public List<JobDTO> toDTOList(List<Job> jobList) {

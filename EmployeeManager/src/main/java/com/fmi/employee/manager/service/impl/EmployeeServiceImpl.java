@@ -2,7 +2,6 @@ package com.fmi.employee.manager.service.impl;
 
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
-import com.fmi.employee.manager.dto.EmpDTOWithJobAndOrg;
 import com.fmi.employee.manager.mapper.EmployeeDTOMapper;
 import com.fmi.employee.manager.model.Employee;
 import com.fmi.employee.manager.model.Job;
@@ -37,19 +36,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmpDTOWithJobAndOrg saveEmployee(EmpDTO employeeDTO) {
-        Employee employeeToReturn = new Employee();
-
-        employeeToReturn.update(employeeDTO); // Missing JOB and ORG <- find them by internal code
-
+    public EmpDTOWithId saveEmployee(EmpDTO employeeDTO) {
         Job jobToAttach = jobService.getJobByInternalCode(employeeDTO.getJobCode());
         Organization orgToAttach = orgService.getOrgByInternalCode(employeeDTO.getOrgCode());
 
-        employeeToReturn.setJob(jobToAttach);
-        employeeToReturn.setOrg(orgToAttach);
+        Employee employeeToReturn = Employee.builder()
+                .firstName(employeeDTO.getFirstName())
+                .lastName(employeeDTO.getLastName())
+                .email(employeeDTO.getEmail())
+                .phone(employeeDTO.getPhone())
+                .hireDate(employeeDTO.getHireDate())
+                .salary(employeeDTO.getSalary())
+                .topSkill(employeeDTO.getTopSkill())
+                .job(jobToAttach)
+                .org(orgToAttach)
+                .build();
 
         employeeRepo.save(employeeToReturn);
 
-        return mapper.toDTOWithJobAndOrg(employeeToReturn);
+        return mapper.toDTOWithId(employeeToReturn);
     }
 }

@@ -2,7 +2,6 @@ package com.fmi.employee.manager.controller;
 
 import com.fmi.employee.manager.dto.EmpDTO;
 import com.fmi.employee.manager.dto.EmpDTOWithId;
-import com.fmi.employee.manager.dto.EmpDTOWithJobAndOrg;
 import com.fmi.employee.manager.mapper.EmployeeDTOMapper;
 import com.fmi.employee.manager.model.Employee;
 import com.fmi.employee.manager.model.Job;
@@ -24,12 +23,10 @@ import java.util.Collections;
 @RequestMapping("api")
 public class EmployeeController {
     private EmployeeService empService;
-    private EmployeeDTOMapper mapper;
 
     @Autowired
-    public EmployeeController(EmployeeService empService, EmployeeDTOMapper mapper) {
+    public EmployeeController(EmployeeService empService) {
         this.empService = empService;
-        this.mapper = mapper;
     }
 
     // http://localhost:8080/api/emp/template
@@ -65,11 +62,8 @@ public class EmployeeController {
         );
     }
 
-    // CAUSES STACKOVERFLOW EXCEPTION!
-
-    // http://localhost:8080/api/emp
     @PostMapping("emp")
-    public ResponseEntity<EmpDTOWithJobAndOrg> saveSingleEmployee(@RequestBody EmpDTO empDTO) {
+    public ResponseEntity<EmpDTOWithId> saveSingleEmployee(@RequestBody EmpDTO empDTO) {
         return new ResponseEntity<>(empService.saveEmployee(empDTO), HttpStatus.CREATED);
     }
 }
