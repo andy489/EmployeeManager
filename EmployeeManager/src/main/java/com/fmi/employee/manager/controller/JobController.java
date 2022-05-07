@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -53,13 +54,15 @@ public class JobController {
     }
 
     @PostMapping("job")
-    public ResponseEntity<JobDTOWithId> saveSingleJob(@RequestBody JobDTOWithoutEmployees jobDTOWithoutEmployees) {
+    public ResponseEntity<JobDTOWithId> saveSingleJob(
+            @RequestBody @Valid JobDTOWithoutEmployees jobDTOWithoutEmployees
+    ) {
         return new ResponseEntity<>(jobService.saveJob(jobDTOWithoutEmployees), HttpStatus.CREATED);
     }
 
     @PostMapping("jobs")
     public ResponseEntity<List<JobDTOWithId>> saveMultipleJobs(
-            @RequestBody List<JobDTOWithoutEmployees> jobDTOWithoutEmployees
+            @RequestBody @Valid List<JobDTOWithoutEmployees> jobDTOWithoutEmployees
     ) {
         return new ResponseEntity<>(jobService.saveAll(jobDTOWithoutEmployees), HttpStatus.CREATED);
     }
@@ -70,12 +73,16 @@ public class JobController {
     }
 
     @GetMapping("job/id/{id}")
-    public ResponseEntity<JobDTOWithId> getJobById(@PathVariable("id") Long jobId) {
+    public ResponseEntity<JobDTOWithId> getJobById(
+            @PathVariable("id") Long jobId
+    ) {
         return new ResponseEntity<>(jobService.getJobById(jobId), HttpStatus.OK);
     }
 
     @GetMapping("job/code/{code}")
-    public ResponseEntity<JobDTO> getJobByInternalCode(@PathVariable("code") String jobInternalCode) {
+    public ResponseEntity<JobDTO> getJobByInternalCode(
+            @PathVariable("code") String jobInternalCode
+    ) {
         return new ResponseEntity<>(mapper.toDTO(jobService.getJobByInternalCode(jobInternalCode)), HttpStatus.OK);
     }
 
@@ -98,7 +105,9 @@ public class JobController {
     }
 
     @GetMapping("/job/s/{salary}")
-    public ResponseEntity<List<JobDTO>> getJobWitMinSalaryAtLeast(@PathVariable("salary") Integer minSalary) {
+    public ResponseEntity<List<JobDTO>> getJobWitMinSalaryAtLeast(
+            @PathVariable("salary") Integer minSalary
+    ) {
         return new ResponseEntity<>(jobService.getJobsWithMinSalaryAtLeast(minSalary), HttpStatus.OK);
     }
 
@@ -112,7 +121,9 @@ public class JobController {
 
     @Transactional
     @DeleteMapping("/job/{id}")
-    public ResponseEntity<String> deleteJob(@PathVariable("id") Long jobId) {
+    public ResponseEntity<String> deleteJob(
+            @PathVariable("id") Long jobId
+    ) {
         JobDTO deletedJob = jobService.deleteJob(jobId);
         return new ResponseEntity<>(
                 String.format(

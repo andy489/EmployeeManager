@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -63,7 +64,7 @@ public class EmployeeController {
     }
 
     @PostMapping("emp")
-    public ResponseEntity<EmpDTOWithId> saveSingleEmployee(@RequestBody EmpDTO empDTO) {
+    public ResponseEntity<EmpDTOWithId> saveSingleEmployee(@RequestBody @Valid EmpDTO empDTO) {
         return new ResponseEntity<>(empService.saveEmployee(empDTO), HttpStatus.CREATED);
     }
 }

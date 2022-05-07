@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Getter
@@ -18,5 +19,6 @@ public class OrgDTO {
     @JsonIgnoreProperties(value = {"org", "job"})
     private List<EmpDTOWithoutInternalCodes> employees;
 
+    @Pattern(regexp = "^[A-Z]{1,8}$", message = "Internal codes must consist only uppercase characters")
     private String internalCode;
 }

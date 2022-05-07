@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -50,13 +51,15 @@ public class OrganizationController {
     }
 
     @PostMapping("org")
-    public ResponseEntity<OrgDTOWithId> saveSingleOrg(@RequestBody OrgDTOWithoutEmployees orgDTOWithoutEmployees) {
+    public ResponseEntity<OrgDTOWithId> saveSingleOrg(
+            @RequestBody @Valid OrgDTOWithoutEmployees orgDTOWithoutEmployees
+    ) {
         return new ResponseEntity<>(orgService.saveOrg(orgDTOWithoutEmployees), HttpStatus.CREATED);
     }
 
     @PostMapping("orgs")
     public ResponseEntity<List<OrgDTOWithId>> saveMultipleJobs(
-            @RequestBody List<OrgDTOWithoutEmployees> orgDTOWithoutEmployees
+            @RequestBody @Valid List<OrgDTOWithoutEmployees> orgDTOWithoutEmployees
     ) {
         return new ResponseEntity<>(orgService.saveAll(orgDTOWithoutEmployees), HttpStatus.CREATED);
     }
@@ -67,12 +70,16 @@ public class OrganizationController {
     }
 
     @GetMapping("org/id/{id}")
-    public ResponseEntity<OrgDTOWithId> getOrgById(@PathVariable("id") Long orgId) {
+    public ResponseEntity<OrgDTOWithId> getOrgById(
+            @PathVariable("id") Long orgId
+    ) {
         return new ResponseEntity<>(orgService.getOrgById(orgId), HttpStatus.OK);
     }
 
     @GetMapping("org/code/{code}")
-    public ResponseEntity<OrgDTO> getOrgByInternalCode(@PathVariable("code") String orgInternalCode) {
+    public ResponseEntity<OrgDTO> getOrgByInternalCode(
+            @PathVariable("code") String orgInternalCode
+    ) {
         return new ResponseEntity<>(mapper.toDTO(orgService.getOrgByInternalCode(orgInternalCode)), HttpStatus.OK);
     }
 
@@ -86,7 +93,9 @@ public class OrganizationController {
 
     @Transactional
     @DeleteMapping("/org/{id}")
-    public ResponseEntity<String> deleteOrg(@PathVariable("id") Long orgId) {
+    public ResponseEntity<String> deleteOrg(
+            @PathVariable("id") Long orgId
+    ) {
         OrgDTO deletedOrg = orgService.deleteOrg(orgId);
         return new ResponseEntity<>(
                 String.format("~Organization \"%s\" with id %d was deleted successfully.",
