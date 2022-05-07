@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -21,7 +22,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
             RuntimeException ex,
             WebRequest request
     ) {
-        String bodyOfResponse = "\"error\": \"Something went wrong. We are sorry.\" }";
+        String bodyOfResponse = "\"error\": { \"Something went wrong. We are sorry.\" }";
 
         return handleExceptionInternal(
                 ex,
@@ -32,6 +33,7 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
         );
     }
 
+    @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
             HttpHeaders headers,
@@ -48,5 +50,17 @@ public class GlobalRestExceptionHandler extends ResponseEntityExceptionHandler {
                 });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleMissingServletRequestParameter(
+            MissingServletRequestParameterException ex,
+            HttpHeaders headers,
+            HttpStatus status,
+            WebRequest request
+    ) {
+        String error = String.format("Query parameter \"%s\" is missing in request", ex.getParameterName());
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 }
